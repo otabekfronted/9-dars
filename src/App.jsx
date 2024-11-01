@@ -1,31 +1,55 @@
 import { useSelector, useDispatch } from "react-redux";
-import { clear, remove, update } from "./redux/studentSlice";
-import { useState } from "react";
+import { add, clear, remove, update } from "./redux/studentSlice";
+import { useEffect, useState } from "react";
 import Modal from "./components/Modal";
+import ModalUpdate from "./components/ModalUpdate";
 
 function App() {
     const cart = useSelector((state) => state.cart.value);
     const dispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
+    const [updateElement, setUpdateElement] = useState(null);
+    const [showModalUpdate, setShowModalUpdate] = useState(false);
+    const [hasLoad, setHasLoad] = useState(false);
 
-    // function handeleAdd(e) {
-    //     e.preventDefault();
-    //     dispatch(add());
-    // }
+    useEffect(() => {
+        if (!hasLoad) {
+            const savedCart = JSON.parse(localStorage.getItem("cart"));
+            if (savedCart) {
+                savedCart.forEach((item) => dispatch(add(item)));
+            }
+            setHasLoad(true);
+        }
+    }, [hasLoad, dispatch]);
+
+    useEffect(() => {
+        if (hasLoad) {
+            localStorage.setItem("cart", JSON.stringify(cart));
+        }
+    }, [cart, hasLoad]);
 
     function handleRemove(id) {
         dispatch(remove(id));
     }
-    function handleclear() {
+
+    function handleClear() {
         dispatch(clear());
     }
-    function handleupdate(id) {
-        dispatch(update({ id, name: "", price: "", type: "" })); // Namuna uchun
+
+    function handleUpdate(value) {
+        setShowModalUpdate(true);
+        setUpdateElement(value);
     }
 
     return (
         <div className="container mx-auto mt-16 p-4">
             {showModal && <Modal setShowModal={setShowModal} />}
+            {showModalUpdate && (
+                <ModalUpdate
+                    product={updateElement}
+                    setShowModalUpdate={setShowModalUpdate}
+                />
+            )}
 
             <div className="flex flex-col items-center gap-4 mb-8">
                 <button
@@ -35,7 +59,7 @@ function App() {
                     Open Modal
                 </button>
                 <button
-                    onClick={handleclear}
+                    onClick={handleClear}
                     className="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg"
                 >
                     Clear All
@@ -70,7 +94,7 @@ function App() {
                                     Delete
                                 </button>
                                 <button
-                                    onClick={() => handleupdate(value.id)}
+                                    onClick={() => handleUpdate(value)}
                                     className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg"
                                 >
                                     Update
