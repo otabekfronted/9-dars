@@ -3,8 +3,11 @@ import { add, clear, remove, update } from "./redux/studentSlice";
 import { useEffect, useState } from "react";
 import Modal from "./components/Modal";
 import ModalUpdate from "./components/ModalUpdate";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
+    const notify = () => toast("All cards have been cleared!");
     const cart = useSelector((state) => state.cart.value);
     const dispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
@@ -43,6 +46,7 @@ function App() {
 
     return (
         <div className="container mx-auto mt-16 p-4">
+            <ToastContainer />
             {showModal && <Modal setShowModal={setShowModal} />}
             {showModalUpdate && (
                 <ModalUpdate
@@ -59,7 +63,9 @@ function App() {
                     Open Modal
                 </button>
                 <button
-                    onClick={handleClear}
+                    onClick={() => {
+                        handleClear(), notify();
+                    }}
                     className="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg"
                 >
                     Clear All

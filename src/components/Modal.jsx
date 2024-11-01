@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { add } from "../redux/studentSlice";
+import { toast } from "react-toastify";
 
 function Modal({ setShowModal }) {
+    const notify = () => toast("Add card");
+
     const [cartName, setCartName] = useState("");
     const [price, setPrice] = useState("");
     const [type, setType] = useState("");
@@ -73,6 +76,7 @@ function Modal({ setShowModal }) {
                         </button>
                         <button
                             type="submit"
+                            onClick={() => notify()}
                             className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg"
                         >
                             Yaratish

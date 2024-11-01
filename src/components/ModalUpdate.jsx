@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { update } from "../redux/studentSlice";
+import { toast } from "react-toastify";
 
 function ModalUpdate({ setShowModalUpdate, product }) {
+    const notify = () => toast("Card Update");
     const [cartName, setCartName] = useState("");
     const [price, setPrice] = useState("");
     const [type, setType] = useState("");
@@ -16,8 +18,8 @@ function ModalUpdate({ setShowModalUpdate, product }) {
         setCartName(product.name);
     }, [product]);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = () => {
+        // e.preventDefault();
         dispatch(
             update({
                 name: cartName,
@@ -84,7 +86,9 @@ function ModalUpdate({ setShowModalUpdate, product }) {
                         </button>
                         <button
                             type="submit"
-                            onClick={handleSubmit} // Added onClick to trigger handleSubmit
+                            onClick={() => {
+                                handleSubmit(), notify();
+                            }}
                             className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg"
                         >
                             Update
