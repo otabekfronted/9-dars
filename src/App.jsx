@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 function App() {
     const notify = () => toast("All cards have been cleared!");
+    const deleteCard = () => toast("Delete Card");
     const cart = useSelector((state) => state.cart.value);
     const dispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
@@ -94,7 +95,9 @@ function App() {
                             </div>
                             <div className="flex gap-2 mt-4">
                                 <button
-                                    onClick={() => handleRemove(value.id)}
+                                    onClick={() => {
+                                        handleRemove(value.id), deleteCard();
+                                    }}
                                     className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg"
                                 >
                                     Delete
