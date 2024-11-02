@@ -80,18 +80,16 @@ function App() {
                             key={value.id}
                             className="bg-white shadow-md rounded-lg p-6 flex flex-col justify-between"
                         >
-                            <div>
+                            <div className="text-lg font-semibold text-gray-700">
                                 <p className="text-lg font-semibold text-gray-700">
-                                    {value.name}
+                                    Name: {value.name}
                                 </p>
-                                <p>{value.id}</p>
+                                <p>Id: {value.id}</p>
+
                                 <p className="text-gray-500">
-                                    Price: {value.price}
+                                    SurName: {value.surname}
                                 </p>
-                                <p className="text-gray-500">
-                                    Type: {value.type}
-                                </p>
-                                <p>Quantity: {value.quantity}</p>
+                                <p>Age: {value.age}</p>
                             </div>
                             <div className="flex gap-2 mt-4">
                                 <button

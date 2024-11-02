@@ -6,21 +6,19 @@ import { toast } from "react-toastify";
 function Modal({ setShowModal }) {
     const notify = () => toast("Add card");
 
-    const [cartName, setCartName] = useState("");
-    const [price, setPrice] = useState("");
-    const [type, setType] = useState("");
-    const [quantity, setQuantity] = useState(1);
+    const [name, setName] = useState("");
+    const [surname, setSurname] = useState("");
+    const [age, setAge] = useState("");
     const dispatch = useDispatch();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(
             add({
-                name: cartName,
+                name: name,
+                surname: surname,
                 id: Date.now(),
-                price: Number(price),
-                type,
-                quantity: Number(quantity),
+                age: Number(age),
             })
         );
         setShowModal(false);
@@ -33,39 +31,28 @@ function Modal({ setShowModal }) {
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                     <input
                         type="text"
-                        placeholder="Cart nomi"
-                        value={cartName}
-                        onChange={(e) => setCartName(e.target.value)}
-                        className="border p-2 rounded w-full"
-                        required
-                    />
-                    <input
-                        type="number"
-                        placeholder="Narxi"
-                        value={price}
-                        onChange={(e) => setPrice(e.target.value)}
+                        placeholder="Name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                         className="border p-2 rounded w-full"
                         required
                     />
                     <input
                         type="text"
-                        placeholder="Tavsifi"
-                        value={type}
-                        onChange={(e) => setType(e.target.value)}
+                        placeholder="Surname"
+                        value={surname}
+                        onChange={(e) => setSurname(e.target.value)}
                         className="border p-2 rounded w-full"
                     />
-                    <label htmlFor="">
-                        Quantity
-                        <input
-                            type="number"
-                            placeholder="Miqdori"
-                            value={quantity}
-                            onChange={(e) => setQuantity(e.target.value)}
-                            className="border p-2 rounded w-full"
-                            min="1"
-                            required
-                        />
-                    </label>
+                    <input
+                        type="number"
+                        placeholder="Age"
+                        value={age}
+                        onChange={(e) => setAge(e.target.value)}
+                        className="border p-2 rounded w-full"
+                        required
+                    />
+
                     <div className="flex justify-end gap-2">
                         <button
                             type="button"
